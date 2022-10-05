@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { PlaylistDetailComponent } from '../components/playlist-detail/playlist-detail.component';
 import { PlaylistModalComponent } from '../components/playlist-modal/playlist-modal.component';
 
 @Component({
@@ -21,7 +22,20 @@ export class Tab2Page {
   }
 
   removePlaylist() {
+    console.log('remove playlist');
+  }
 
+  async newPlaylist() {
+    const modal = await this.modalCtrl.create({
+      component: PlaylistDetailComponent
+    });
+    modal.present();
+
+    const modalClosed = await modal.onWillDismiss();
+    if (modalClosed.data?.reload) {
+      console.log('reload playlist');
+    }
+    
   }
 
   async showPlaylist() {

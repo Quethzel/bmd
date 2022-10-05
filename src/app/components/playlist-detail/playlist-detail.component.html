@@ -1,3 +1,70 @@
-<p>
-  playlist-detail works!
-</p>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>New Event Playlist</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="modal.dismiss()">Cancel</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label>Fecha del Evento</ion-label>
+      <ion-datetime-button datetime="datetime"></ion-datetime-button>
+      <ion-modal [keepContentsMounted]="true">
+        <ng-template>
+          <ion-datetime id="datetime" size="cover" 
+            min="{{today | date: 'YYYY-MM-ddTHH:mm:ss'}}"
+            max="{{ maxdate | date: 'YYYY-MM-ddTHH:mm:ss' }}"
+            value="{{playlist.eventDate | date: 'YYYY-MM-ddTHH:mm:ss'}}" 
+            (ionChange)="changeEventDate($event)">
+          </ion-datetime>
+        </ng-template>
+      </ion-modal>
+    </ion-item>
+
+    <ion-item>
+      El playlist de recomendaciones estara disponible
+    </ion-item>
+    <ion-item>
+      <ion-label>a partir del día</ion-label>
+      <ion-datetime-button datetime="datetime-from"></ion-datetime-button>
+      <ion-modal [keepContentsMounted]="true">
+        <ng-template>
+          <ion-datetime id="datetime-from" size="cover" 
+            min="{{today | date: 'YYYY-MM-ddTHH:mm:ss' }}"
+            max="{{ playlist.eventDate | date: 'YYYY-MM-ddTHH:mm:ss' }}"
+            value="{{playlist.availableSince | date: 'YYYY-MM-ddTHH:mm:ss'}}"
+            (ionChange)="changeMinDate($event)">
+          </ion-datetime>
+        </ng-template>
+      </ion-modal>
+    </ion-item>
+    <ion-item>
+      <ion-label>hasta</ion-label>
+      <ion-datetime-button datetime="datetime-to"></ion-datetime-button>
+      <ion-modal [keepContentsMounted]="true">
+        <ng-template>
+          <ion-datetime id="datetime-to" size="cover" 
+            min="{{playlist.availableSince | date: 'YYYY-MM-ddTHH:mm:ss' }}"
+            max="{{ playlist.eventDate | date: 'YYYY-MM-ddTHH:mm:ss' }}"
+            value="{{playlist.availableUntil | date: 'YYYY-MM-ddTHH:mm:ss'}}">
+          </ion-datetime>
+        </ng-template>
+      </ion-modal>
+    </ion-item>
+
+    <ion-item>
+      <ion-input type="text" [(ngModel)]="playlist.eventName" name="eventName" placeholder="Nombre del Evento"
+        position="floating" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input type="text" [(ngModel)]="playlist.eventPlace" name="eventPlace" placeholder="Lugar del Evento"
+        required></ion-input>
+    </ion-item>
+    <ion-button (click)="createPlaylist()" expand="block">Crear Playlist</ion-button>
+
+  </ion-list>
+</ion-content>
