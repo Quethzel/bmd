@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Playlist } from 'src/app/entities/playlist';
+import { PlaylistView } from 'src/app/enums/playlist-view';
 
 @Component({
   selector: 'app-playlist-modal',
@@ -6,18 +8,23 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./playlist-modal.component.scss'],
 })
 export class PlaylistModalComponent implements OnInit {
-  playlist: any;
+  playlist: Playlist;
+  viewAs: PlaylistView;
+  selectedView: PlaylistView = PlaylistView.Viewer;
 
   constructor() {
-    this.playlist = [
-      { name: 'Eres Mia', artist: 'Romeo Santos', likes: 11, img: 'https://i.pravatar.cc/300?u=b' },
-      { name: 'Lao a Lao', artist: 'Prince Royce', likes: 7, img: 'https://i.pravatar.cc/300?u=a' },
-      { name: 'Devórame otra vez', artist: 'Lalo Rodriguez', likes: 3, img: 'https://i.pravatar.cc/300?u=c' },
-      { name: 'Deja vu', artist: 'Shakira', likes: 1, img: 'https://i.pravatar.cc/300?u=e' },
-    ];
+
+    // this.selectedView = 'playlist';
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.viewAs);
+    console.log(this.playlist);
+  }
+
+  onSegmentChanged(selectedView: PlaylistView) {
+    this.selectedView = selectedView;
+  }
 
   removeItem() {}
 

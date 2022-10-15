@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
-import { PlaylistModalComponent } from '../components/playlist-modal/playlist-modal.component';
+import { PlaylistView } from '../enums/playlist-view';
+import { PlaylistService } from '../services/playlist.service';
 
 @Component({
   selector: 'app-tab1',
@@ -11,7 +11,9 @@ export class Tab1Page implements OnInit {
   presentingElement = null;
   countDownDate: number;
   countdown: string;
-  constructor(private modalCtrl: ModalController) {}
+  constructor(private plService: PlaylistService) {
+
+  }
 
   ngOnInit(): void {
     this.presentingElement = document.querySelector('.ion-page');
@@ -19,17 +21,7 @@ export class Tab1Page implements OnInit {
 
 
   async showPlaylist() {
-    const modal = await this.modalCtrl.create({
-      component: PlaylistModalComponent,
-    });
-    modal.present();
-
-    const { data, role } = await modal.onWillDismiss();
-
-    if (role === 'confirm') {
-      const message = `Hello, ${data}!`;
-      console.log(message);
-    }
+    this.plService.showPlaylist(null, PlaylistView.Viewer)
   }
 
 }

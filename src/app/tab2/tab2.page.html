@@ -19,14 +19,17 @@
 
   <ion-list>
     <ion-item-sliding *ngFor="let playlist of playlists">
-      <ion-item button detail="true" (click)="showPlaylist()">
+      <ion-item button detail="true" (click)="showPlaylist(playlist.id)">
         <ion-label>
-          <h3>{{playlist.place}}</h3>
-          <p>songs: {{playlist.len}} | status: {{playlist.status}} | event date: {{playlist.date}}</p>
+          <h3>{{playlist.eventPlace}}</h3>
+          <p>songs: {{playlist.len}} | status: {{playlist.textStatus}} | event date: {{playlist.eventDate | date: 'MMM-d HH:mm'}}</p>
         </ion-label>
       </ion-item>
       <ion-item-options>
-        <ion-button class="del-btn" color="danger" (click)="removePlaylist()">
+        <ion-button class="del-btn" fill="clear" color="primary" (click)="removePlaylist()">
+          <ion-icon name="create"></ion-icon> Edit
+        </ion-button>
+        <ion-button class="del-btn" fill="clear" color="danger" (click)="removePlaylist()">
           <ion-icon name="trash"></ion-icon> Delete
         </ion-button>
       </ion-item-options>

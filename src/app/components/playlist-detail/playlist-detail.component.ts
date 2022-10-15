@@ -19,7 +19,7 @@ export class PlaylistDetailComponent implements OnInit {
     this.maxdate = new Date(new Date().setDate(this.today.getDate() + 15));
 
     this.user.djname = 'Dj Mega';
-    this.playlist = new Playlist();
+    this.playlist = new Playlist({});
 
   }
 

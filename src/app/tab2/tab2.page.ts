@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { PlaylistDetailComponent } from '../components/playlist-detail/playlist-detail.component';
-import { PlaylistModalComponent } from '../components/playlist-modal/playlist-modal.component';
+import { Playlist } from '../entities/playlist';
+import { PlaylistView } from '../enums/playlist-view';
+import { PlaylistService } from '../services/playlist.service';
 
 @Component({
   selector: 'app-tab2',
@@ -9,20 +11,18 @@ import { PlaylistModalComponent } from '../components/playlist-modal/playlist-mo
   styleUrls: ['tab2.page.scss']
 })
 export class Tab2Page {
-  playlists: any;
-  constructor(private modalCtrl: ModalController) {
-    this.playlists = this.getPlaylists();
+  playlists: Playlist[];
+  constructor(private modalCtrl: ModalController, private plService: PlaylistService) {
+    //TODO: replace userId
+    const userId = null;
+    plService.getMyPlaylists(userId).subscribe(data => {
+      this.playlists = data;
+    });
   }
 
-  getPlaylists() {
-    return [
-      { place: 'Dancer Lab', len: 21, status: 'open', date: '28 oct. 2022' },
-      { place: 'Patio Barrio', len: 11, status: 'closed', date: '23 oct. 2022' },
-    ];
-  }
-
-  removePlaylist() {
+  removePlaylist(id: string) {
     console.log('remove playlist');
+    this.plService.deletePlaylist(id);
   }
 
   async newPlaylist() {
@@ -38,18 +38,9 @@ export class Tab2Page {
     
   }
 
-  async showPlaylist() {
-    const modal = await this.modalCtrl.create({
-      component: PlaylistModalComponent,
-    });
-    modal.present();
-
-    const { data, role } = await modal.onWillDismiss();
-
-    if (role === 'confirm') {
-      const message = `Hello, ${data}!`;
-      console.log(message);
-    }
+  async showPlaylist(id: string) {
+    const playlist = this.playlists.find(p => p.id == id);
+    this.plService.showPlaylist(playlist, PlaylistView.Editor);
   }
 
 }

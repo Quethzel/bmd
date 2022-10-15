@@ -1,14 +1,37 @@
-export class Playlist {
+import { IPlaylist } from "../interfaces/IPlaylist";
+import { ISong } from "../interfaces/ISong";
+
+export class Playlist implements IPlaylist {
+    id: string;
     eventName: string;
     eventPlace: string;
     eventDate: Date;
     availableSince: Date;
     availableUntil: Date;
+    status: boolean;
+    songs: ISong[];
 
-    constructor() {
+    constructor(pls: Partial<IPlaylist>) {
+        this.eventName = pls.eventName;
+        this.eventPlace = pls.eventPlace;
+        this.songs = pls.songs?.length > 0 ? pls.songs : [];
+        
+       
         this.eventDate = this.nightTime(new Date());
         this.availableSince = this.morningTime(new Date());
         this.availableUntil = this.afternoonTime(new Date());
+        
+        //TODO: replace by the correct ID (propose test)
+        this.id = Math.floor(Math.random() * (100 - 0 + 1) + 0).toString();
+    }
+
+    get len() { 
+        return this.songs.length;
+    }
+
+    get textStatus() {
+        const today = new Date();
+        return today.getTime() - this.availableUntil.getTime() > 0 ? 'Open' : 'Closed';
     }
 
     setAvailableUntilAfternoon() {
