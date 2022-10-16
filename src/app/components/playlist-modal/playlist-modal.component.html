@@ -1,36 +1,26 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>{{playlist.eventPlace}}</ion-title>
+    <ion-title>{{ playlist.eventName }}</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="modal.dismiss()">Close</ion-button>
     </ion-buttons>
   </ion-toolbar>
   <ion-toolbar>
-    <ion-segment [value]="selectedView" (ionChange)="onSegmentChanged($event.target.value)">
-      <ion-segment-button value="0">
-        Songs
-      </ion-segment-button>
-      <ion-segment-button *ngIf="viewAs == 1" value="1">
-        Detail
-      </ion-segment-button>
+    <ion-segment
+      [value]="selectedView"
+      (ionChange)="onSegmentChanged($event.target.value)">
+      <ion-segment-button value="0">Songs</ion-segment-button>
+      <ion-segment-button *ngIf="viewAs == 1" value="1">Detail</ion-segment-button>
     </ion-segment>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-list *ngIf="selectedView == 0">
-    <ion-item *ngFor="let song of playlist.songs">
-      <ion-badge slot="end" color="danger">
-        {{song.likes}}
-        <ion-icon name="heart"></ion-icon>
-      </ion-badge>
-      <ion-avatar slot="start">
-        <ion-img [src]="song.img"></ion-img>
-      </ion-avatar>
-      <ion-label>
-        <h2>{{song.name}}</h2>
-        <p>{{song.artist}}</p>
-      </ion-label>
-    </ion-item>
-  </ion-list>
+  <app-songs *ngIf="selectedView == 0" [songs]="playlist.songs"></app-songs>
+
+  <app-playlist-editor
+    *ngIf="selectedView == 1"
+    [playlist]="playlist"
+    (savePlaylist)="onSavePlaylist(playlist)"
+  ></app-playlist-editor>
 </ion-content>

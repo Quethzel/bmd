@@ -11,6 +11,7 @@ import { PlaylistView } from '../enums/playlist-view';
 export class PlaylistService {
   private data = [
     new Playlist({
+      id: 'abc-246',
       eventName: 'Dancer Lab Social', eventPlace: 'Dancer Lab', status: true, eventDate: new Date(2022,11,28),
       songs: [
         { name: 'Eres Mia', artist: 'Romeo Santos', likes: 11, img: 'https://i.pravatar.cc/300?u=b' },
@@ -20,6 +21,7 @@ export class PlaylistService {
       ]
     }),
     new Playlist({
+      id: 'xyz-369',
       eventName: 'Social PB', eventPlace: 'Patio Barrio', status: false, eventDate: new Date(2022,11,23),
       songs: [
         { name: 'Devórame otra vez', artist: 'Lalo Rodriguez', likes: 3, img: 'https://i.pravatar.cc/300?u=c' },
@@ -33,19 +35,28 @@ export class PlaylistService {
     return of(this.data);
   }
 
-  async showPlaylist(playlist: Playlist, viewAs: PlaylistView) {
+  async showPlaylist(playlist: Playlist, viewAs: PlaylistView, selectedView: number = 0) {
     const modal = await this.modalCtrl.create({
       component: PlaylistModalComponent,
       componentProps: {
         viewAs,
-        playlist
+        playlist,
+        selectedView
       }
     });
     modal.present();
   }
 
-  async deletePlaylist(id: string) {
+  async delete(id: string) {
     this.data.splice(this.data.findIndex(p => p.id == id));
+  }
+
+  async save(pl: Playlist) {
+    if (pl.hasId) {
+      this.data.splice(this.data.findIndex(p => p.id == pl.id), 1, pl);
+    } else {
+      this.data.push(pl);
+    }
   }
 
 

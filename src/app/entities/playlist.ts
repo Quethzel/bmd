@@ -12,17 +12,18 @@ export class Playlist implements IPlaylist {
     songs: ISong[];
 
     constructor(pls: Partial<IPlaylist>) {
-        this.eventName = pls.eventName;
-        this.eventPlace = pls.eventPlace;
+        this.id = pls?.id ? pls.id : null;
+        this.eventName = pls?.eventName;
+        this.eventPlace = pls?.eventPlace;
         this.songs = pls.songs?.length > 0 ? pls.songs : [];
         
-       
         this.eventDate = this.nightTime(new Date());
         this.availableSince = this.morningTime(new Date());
         this.availableUntil = this.afternoonTime(new Date());
-        
-        //TODO: replace by the correct ID (propose test)
-        this.id = Math.floor(Math.random() * (100 - 0 + 1) + 0).toString();
+    }
+
+    get hasId() {
+        return this.id != null;
     }
 
     get len() { 

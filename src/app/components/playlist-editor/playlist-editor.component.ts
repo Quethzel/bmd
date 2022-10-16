@@ -1,20 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
-import { DatetimeCustomEvent } from '@ionic/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { DatetimeCustomEvent } from '@ionic/angular';
 import { Playlist } from 'src/app/entities/playlist';
 
 @Component({
-  selector: 'app-playlist-detail',
-  templateUrl: './playlist-detail.component.html',
-  styleUrls: ['./playlist-detail.component.scss'],
+  selector: 'app-playlist-editor',
+  templateUrl: './playlist-editor.component.html',
+  styleUrls: ['./playlist-editor.component.scss'],
 })
-export class PlaylistDetailComponent implements OnInit {
-  playlist: Playlist;
+export class PlaylistEditorComponent implements OnInit {
+
+  @Input() playlist: Playlist;
+  @Output() savePlaylist = new EventEmitter<Playlist>();
+
   user: any = {};
   today = new Date();
   maxdate: Date; 
 
-  constructor(private modalCtrl: ModalController) {
+  constructor() {
     this.today = new Date();
     this.maxdate = new Date(new Date().setDate(this.today.getDate() + 15));
 
@@ -23,7 +25,9 @@ export class PlaylistDetailComponent implements OnInit {
 
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.playlist);
+  }
 
   changeEventDate($event: DatetimeCustomEvent) {
     this.playlist.eventDate = new Date($event.detail.value.toString());
@@ -36,9 +40,8 @@ export class PlaylistDetailComponent implements OnInit {
   }
 
 
-  createPlaylist() {
-    console.log(this.playlist);
-    this.modalCtrl.dismiss({reload: true});
+  save() {
+    this.savePlaylist.next(this.playlist);
   }
 
 }

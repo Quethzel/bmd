@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { ModalController } from '@ionic/angular';
-import { PlaylistDetailComponent } from '../components/playlist-detail/playlist-detail.component';
 import { Playlist } from '../entities/playlist';
 import { PlaylistView } from '../enums/playlist-view';
 import { PlaylistService } from '../services/playlist.service';
@@ -12,7 +10,7 @@ import { PlaylistService } from '../services/playlist.service';
 })
 export class Tab2Page {
   playlists: Playlist[];
-  constructor(private modalCtrl: ModalController, private plService: PlaylistService) {
+  constructor(private plService: PlaylistService) {
     //TODO: replace userId
     const userId = null;
     plService.getMyPlaylists(userId).subscribe(data => {
@@ -22,25 +20,22 @@ export class Tab2Page {
 
   removePlaylist(id: string) {
     console.log('remove playlist');
-    this.plService.deletePlaylist(id);
+    this.plService.delete(id);
   }
 
   async newPlaylist() {
-    const modal = await this.modalCtrl.create({
-      component: PlaylistDetailComponent
-    });
-    modal.present();
-
-    const modalClosed = await modal.onWillDismiss();
-    if (modalClosed.data?.reload) {
-      console.log('reload playlist');
-    }
-    
+    const playlist = new Playlist({});
+    this.openPlaylist(playlist, 1);
   }
 
-  async showPlaylist(id: string) {
+  async showPlaylist(id: string, selectedView: number) {
     const playlist = this.playlists.find(p => p.id == id);
-    this.plService.showPlaylist(playlist, PlaylistView.Editor);
+    this.openPlaylist(playlist, selectedView);
   }
+
+  private async openPlaylist(pl: Playlist, selectedView: number) {
+    this.plService.showPlaylist(pl, PlaylistView.Editor, selectedView);
+  }
+
 
 }

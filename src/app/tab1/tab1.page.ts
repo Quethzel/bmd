@@ -8,7 +8,7 @@ import { PlaylistService } from '../services/playlist.service';
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page implements OnInit {
-  presentingElement = null;
+  // presentingElement = null;
   countDownDate: number;
   countdown: string;
   constructor(private plService: PlaylistService) {
@@ -16,7 +16,7 @@ export class Tab1Page implements OnInit {
   }
 
   ngOnInit(): void {
-    this.presentingElement = document.querySelector('.ion-page');
+    // this.presentingElement = document.querySelector('.ion-page');
   }
 
 
