@@ -3,7 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { of } from 'rxjs';
 import { PlaylistModalComponent } from '../components/playlist-modal/playlist-modal.component';
 import { Playlist } from '../entities/playlist';
-import { PlaylistView } from '../enums/playlist-view';
+
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,8 @@ export class PlaylistService {
         { name: 'Lao a Lao', artist: 'Prince Royce', likes: 7, img: 'https://i.pravatar.cc/300?u=a' },
         { name: 'Devórame otra vez', artist: 'Lalo Rodriguez', likes: 3, img: 'https://i.pravatar.cc/300?u=c' },
         { name: 'Deja vu', artist: 'Shakira', likes: 1, img: 'https://i.pravatar.cc/300?u=e' },
-      ]
+      ],
+      url: 'https://github.com/Cordobo/angularx-qrcode'
     }),
     new Playlist({
       id: 'xyz-369',
@@ -26,7 +27,8 @@ export class PlaylistService {
       songs: [
         { name: 'Devórame otra vez', artist: 'Lalo Rodriguez', likes: 3, img: 'https://i.pravatar.cc/300?u=c' },
         { name: 'Deja vu', artist: 'Shakira', likes: 1, img: 'https://i.pravatar.cc/300?u=e' },
-      ]
+      ],
+      url: 'https://github.com/Cordobo/angularx-qrcode'
   })
   ];
   constructor(private modalCtrl: ModalController) {}
@@ -35,11 +37,10 @@ export class PlaylistService {
     return of(this.data);
   }
 
-  async showPlaylist(playlist: Playlist, viewAs: PlaylistView, selectedView: number = 0) {
+  async showPlaylist(playlist: Playlist, selectedView: number = 0) {
     const modal = await this.modalCtrl.create({
       component: PlaylistModalComponent,
       componentProps: {
-        viewAs,
         playlist,
         selectedView
       }

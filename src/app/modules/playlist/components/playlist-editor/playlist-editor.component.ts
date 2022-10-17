@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DatetimeCustomEvent } from '@ionic/angular';
-import { Playlist } from 'src/app/entities/playlist';
+import { Playlist } from 'src/app/modules/playlist/entities/playlist';
 
 @Component({
   selector: 'app-playlist-editor',

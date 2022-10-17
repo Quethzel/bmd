@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ playlist.eventName }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="modal.dismiss()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-segment
+      [value]="selectedView"
+      (ionChange)="onSegmentChanged($event.target.value)">
+      <ion-segment-button value="0">Share</ion-segment-button>
+      <ion-segment-button value="1">Songs</ion-segment-button>
+      <ion-segment-button value="2">Detail</ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <app-qr-playlist *ngIf="selectedView == 0" [url]="playlist.url"></app-qr-playlist>
+
+  <app-songs *ngIf="selectedView == 1" [songs]="playlist.songs"></app-songs>
+
+  <app-playlist-editor
+    *ngIf="selectedView == 2"
+    [playlist]="playlist"
+    (savePlaylist)="onSavePlaylist(playlist)"
+  ></app-playlist-editor>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-segment
+      [value]="selectedView"
+      (ionChange)="onSegmentChanged($event.target.value)">
+      <ion-segment-button value="0"><ion-icon name="share"></ion-icon></ion-segment-button>
+      <ion-segment-button value="1"><ion-icon name="musical-notes"></ion-icon></ion-segment-button>
+      <ion-segment-button value="2"><ion-icon name="create"></ion-icon></ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-footer>

@@ -9,4 +9,5 @@ export interface IPlaylist {
     availableUntil: Date;
     status: boolean;
     songs: ISong[];
+    url: string;
 }

@@ -1,5 +1,5 @@
-import { IPlaylist } from "../interfaces/IPlaylist";
-import { ISong } from "../interfaces/ISong";
+import { IPlaylist } from "../../../interfaces/IPlaylist";
+import { ISong } from "../../../interfaces/ISong";
 
 export class Playlist implements IPlaylist {
     id: string;
@@ -10,12 +10,14 @@ export class Playlist implements IPlaylist {
     availableUntil: Date;
     status: boolean;
     songs: ISong[];
+    url: string;
 
     constructor(pls: Partial<IPlaylist>) {
         this.id = pls?.id ? pls.id : null;
         this.eventName = pls?.eventName;
         this.eventPlace = pls?.eventPlace;
         this.songs = pls.songs?.length > 0 ? pls.songs : [];
+        this.url = pls?.url ? pls.url : null;
         
         this.eventDate = this.nightTime(new Date());
         this.availableSince = this.morningTime(new Date());

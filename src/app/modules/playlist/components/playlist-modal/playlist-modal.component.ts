@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { Playlist } from 'src/app/entities/playlist';
-import { PlaylistView } from 'src/app/enums/playlist-view';
-import { PlaylistService } from 'src/app/services/playlist.service';
+import { Playlist } from 'src/app/modules/playlist/entities/playlist';
+import { PlaylistService } from '../../services/playlist.service';
+
 
 @Component({
   selector: 'app-playlist-modal',
@@ -11,18 +11,16 @@ import { PlaylistService } from 'src/app/services/playlist.service';
 })
 export class PlaylistModalComponent implements OnInit {
   playlist: Playlist;
-  viewAs: PlaylistView;
-  selectedView: PlaylistView;
+  selectedView: number;
 
   constructor(private modalCtrl: ModalController, private plService: PlaylistService) { }
 
   ngOnInit() {
-    console.log(this.viewAs);
     console.log(this.playlist);
     console.log(this.selectedView)
   }
 
-  onSegmentChanged(selectedView: PlaylistView) {
+  onSegmentChanged(selectedView: number) {
     this.selectedView = selectedView;
   }
 
